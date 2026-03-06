@@ -34,7 +34,7 @@ export default function SignupPage() {
                 body: JSON.stringify(formData)
             });
 
-            const data = await res.json();
+            const data: any = await res.json();
 
             if (!res.ok) {
                 if (data.error === 'Invalid or missing Admin Secret Password') {

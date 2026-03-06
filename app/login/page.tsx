@@ -30,7 +30,7 @@ export default function LoginPage() {
             });
 
             const contentType = res.headers.get("content-type");
-            let data = {};
+            let data: any = {};
             if (contentType && contentType.indexOf("application/json") !== -1) {
                 data = await res.json();
             } else {
