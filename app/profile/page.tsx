@@ -84,7 +84,7 @@ export default function ProfilePage() {
         try {
             const res = await fetch(`/api/certificates?registrationId=${registrationId}`);
             if (!res.ok) {
-                const error = await res.json();
+                const error: any = await res.json();
                 alert(error.error || 'Failed to download certificate');
                 return;
             }
