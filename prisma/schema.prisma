@@ -1,0 +1,82 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id            String         @id @default(uuid())
+  email         String         @unique
+  firstName     String
+  lastName      String
+  passwordHash  String
+  role          String         @default("STUDENT")
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  college       College?       @relation(fields: [collegeId], references: [id])
+  collegeId     String?
+  registrations Registration[]
+  resetToken       String?   @unique
+  resetTokenExpiry DateTime?
+}
+
+model College {
+  id          String   @id @default(uuid())
+  name        String   @unique
+  isVerified  Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  admins      User[]
+  events      Event[]
+  broadcasts  Broadcast[]
+}
+
+model Broadcast {
+  id          String   @id @default(uuid())
+  title       String
+  message     String
+  type        String   @default("ANNOUNCEMENT") // ANNOUNCEMENT, URGENT, UPDATE
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  college     College? @relation(fields: [collegeId], references: [id])
+  collegeId   String?
+}
+
+model Event {
+  id          String         @id @default(uuid())
+  title       String
+  category    String
+  date        DateTime
+  location    String
+  description String
+  capacity    Int
+  imageUrl    String?
+  certificateTemplateUrl String?
+  isPaid      Boolean        @default(false)
+  price       Float          @default(0)
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+  college     College        @relation(fields: [collegeId], references: [id])
+  collegeId   String
+  attendees   Registration[]
+}
+
+model Registration {
+  id            String   @id @default(uuid())
+  status        String   @default("CONFIRMED")
+  paymentStatus String   @default("COMPLETED") // COMPLETED for free events, PENDING for paid until payment
+  paymentId     String?
+  orderId       String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  user          User     @relation(fields: [userId], references: [id])
+  userId        String
+  event         Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  eventId       String
+
+  @@unique([userId, eventId])
+}

@@ -1,0 +1,62 @@
+[
+  {
+    "id": "9e74eac0-1e40-4428-a428-af1b99d4eae9",
+    "title": "Tech Innovators Summit 2026",
+    "imageUrl": "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&q=80",
+    "certificateTemplateUrl": null
+  },
+  {
+    "id": "a2efcad7-fd29-4a72-ab1c-78af72d567e2",
+    "title": "Annual Cultural Festival",
+    "imageUrl": "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=800&q=80",
+    "certificateTemplateUrl": null
+  },
+  {
+    "id": "b470cc8e-0479-46ca-8e9d-9beef5f054f2",
+    "title": "Inter-College Basketball Championship",
+    "imageUrl": "https://images.unsplash.com/photo-1546519638-68e109498ffc?w=800&q=80",
+    "certificateTemplateUrl": null
+  },
+  {
+    "id": "61e571bb-96ea-4b06-a7c0-27236f7ec793",
+    "title": "Modern Art Exhibition",
+    "imageUrl": "https://images.unsplash.com/photo-1460661419201-fd4ce186860d?w=800&q=80",
+    "certificateTemplateUrl": null
+  },
+  {
+    "id": "5644ed52-1f64-4919-afe6-47b74a6c3afe",
+    "title": "VIKISITH BHARAT",
+    "imageUrl": "/uploads/f718e426-93ab-40d6-97a8-ac4429a99718-VB.webp",
+    "certificateTemplateUrl": null
+  },
+  {
+    "id": "18f5bb2a-84b5-409b-9916-e870ac99e317",
+    "title": "ECE Department, Pspice competition ",
+    "imageUrl": "",
+    "certificateTemplateUrl": null
+  },
+  {
+    "id": "31aad79d-6882-44e5-ba86-0b3225db0690",
+    "title": "SPEECH COMPETION",
+    "imageUrl": "",
+    "certificateTemplateUrl": null
+  },
+  {
+    "id": "dc37bbb3-e5c0-4a26-ac87-1e3b6e0eda46",
+    "title": "TECH SUMMIT",
+    "imageUrl": "/uploads/da348087-5e06-4619-80de-757a690b90ca-TECH-SUMMIT.jpeg",
+    "certificateTemplateUrl": "/uploads/6cd2404b-c157-472e-acf7-32a8be12a809-CERTIFICATE-TEMPLATE.jpg"
+  },
+  {
+    "id": "6067d894-279f-4912-9262-d19a68b4849f",
+    "title": "EVENT HUB INNAUGRATION",
+    "imageUrl": "",
+    "certificateTemplateUrl": ""
+  },
+  {
+    "id": "c64ba834-f773-49f8-a117-b882da6c8885",
+    "title": "STANDUP COMEDY",
+    "imageUrl": "",
+    "certificateTemplateUrl": ""
+  }
+]
