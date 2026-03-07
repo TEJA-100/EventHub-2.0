@@ -3,8 +3,6 @@ import { prisma } from '@/lib/prisma';
 import { hashPassword } from '@/lib/password';
 import { signToken } from '@/lib/auth';
 import { cookies } from 'next/headers';
-import fs from 'fs';
-import path from 'path';
 
 export async function POST(request: NextRequest) {
     try {
@@ -26,18 +24,15 @@ export async function POST(request: NextRequest) {
         const role = accountType === 'college' ? 'COLLEGE_ADMIN' : 'STUDENT';
 
         if (role === 'COLLEGE_ADMIN') {
-            try {
-                const secretPath = path.join(process.cwd(), 'secret_password.txt');
-                const secretFileContent = fs.readFileSync(secretPath, 'utf-8');
-                const match = secretFileContent.match(/password=(.+)/);
-                const expectedSecret = match ? match[1].trim() : null;
+            const expectedSecret = process.env.ADMIN_SIGNUP_SECRET;
 
-                if (!expectedSecret || adminSecret !== expectedSecret) {
-                    return NextResponse.json({ error: 'Invalid or missing Admin Secret Password' }, { status: 403 });
-                }
-            } catch (fsError) {
-                console.error('Error reading secret password file:', fsError);
+            if (!expectedSecret) {
+                console.error('ADMIN_SIGNUP_SECRET is not configured in environment variables');
                 return NextResponse.json({ error: 'Server configuration error regarding admin secrets.' }, { status: 500 });
+            }
+
+            if (adminSecret !== expectedSecret) {
+                return NextResponse.json({ error: 'Invalid or missing Admin Secret Password' }, { status: 403 });
             }
         }
 
@@ -68,8 +63,9 @@ export async function POST(request: NextRequest) {
             collegeId: user.collegeId
         });
 
-        const cookieStore = await cookies();
-        cookieStore.set({
+        const cookieStore = cookies();
+        const finalCookieStore = cookieStore instanceof Promise ? await cookieStore : cookieStore;
+        finalCookieStore.set({
             name: 'auth_token',
             value: token,
             httpOnly: true,
@@ -84,10 +80,10 @@ export async function POST(request: NextRequest) {
             user: { id: user.id, firstName: user.firstName, role: user.role }
         }, { status: 201 });
 
-    } catch (error: any) {
-        console.error('Signup API error:', error);
+    } catch (err: any) {
+        console.error('Signup API error:', err);
         return NextResponse.json({
-            error: `Registration failed. Please try again or contact support. Details: ${error.message}`
+            error: `Registration failed. Please try again or contact support. Details: ${err.message}`
         }, { status: 500 });
     }
 }

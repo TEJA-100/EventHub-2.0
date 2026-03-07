@@ -21,7 +21,7 @@ export async function GET(request: NextRequest) {
             return NextResponse.json({ error: 'Registration ID required' }, { status: 400 });
         }
 
-        const registration = await prisma.registration.findUnique({
+        const registration = (await prisma.registration.findUnique({
             where: { id: registrationId },
             include: {
                 user: true,
@@ -31,7 +31,7 @@ export async function GET(request: NextRequest) {
                     }
                 }
             }
-        }) as any;
+        })) as any;
 
         if (!registration || registration.userId !== payload.userId) {
             return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
