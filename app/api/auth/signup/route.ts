@@ -47,7 +47,7 @@ export async function POST(request: NextRequest) {
             update: {},
             create: {
                 name: normalizedCollegeName,
-                isVerified: role === 'COLLEGE_ADMIN' // Auto-verify if an admin signs up (or you can keep it false)
+                isVerified: role === 'COLLEGE_ADMIN'
             }
         });
         const collegeId = college.id;
@@ -63,9 +63,8 @@ export async function POST(request: NextRequest) {
             collegeId: user.collegeId
         });
 
-        const cookieStore = cookies();
-        const finalCookieStore = cookieStore instanceof Promise ? await cookieStore : cookieStore;
-        finalCookieStore.set({
+        const cookieStore = await cookies();
+        cookieStore.set({
             name: 'auth_token',
             value: token,
             httpOnly: true,
